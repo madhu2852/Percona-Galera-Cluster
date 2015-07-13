@@ -33,31 +33,6 @@ package{["xinetd",
 }
 
 
-#if $fqdn == $galera_master {
-
-   #  database_user { "root@localhost":
-    #  ensure => "present",
-    #  password_hash => mysql_password("madhukarneel"), # can not change password in clustercheck script
-    #  provider      => 'mysql',
-    #  require => File["/root/.my.cnf"] # why this is require ?
-   # }
-
-    #database_user { "keystone1@localhost":
-     # ensure => "present",
-     # password_hash => mysql_password("hiera('mysql_root_password')"),
-     # provider  => "mysql",
-     # require => File["/root/.my.cnf"] # why this is require ?
-   # }
-#}
-
-# set the same debian_sys_maint password
-
-#exec{"set-mysql-debian-sys-miant-pass":
- 
- #  command => "/bin/sed -i 's/^password.*/password = debiansysmaint_password!/g' /etc/mysql/debian.cnf",
-  #  unless => "/bin/grep -qFx 'password = debiansysmaint_password!' /etc/mysql/debian.cnf",
-   # require => Package["mysql-server"]
-#}
 
 service{"xinetd": hasstatus => false }
 
@@ -87,10 +62,6 @@ if $fqdn == hiera('boot_strappingnode_hostname') {
 		require => Class['percona::bootstrap']
 }
 
-#	package {'python-mysqldb':
-#		ensure => latest,
-#		require => Class ['percona::bootstrap'],
-#}
 
 
 }		
