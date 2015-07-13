@@ -1,0 +1,81 @@
+[client]
+
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+
+[isamchk]
+
+key_buffer_size = 16M
+
+[mysqld]
+
+###
+
+default-storage-engine = innodb
+innodb_file_per_table
+collation-server = utf8_general_ci
+init-connect = 'SET NAMES utf8'
+character-set-server = utf8
+
+###
+
+basedir = /usr
+bind-address = <%= @ipaddress_eth0 %>
+datadir = /var/lib/mysql
+expire_logs_days = 10
+key_buffer_size = 16M
+log-error = /var/log/mysql/error.log
+max_allowed_packet = 16M
+max_binlog_size = 100M
+max_connections = 151
+myisam_recover = BACKUP
+pid-file = /var/run/mysqld/mysqld.pid
+port = 3306
+query_cache_limit = 1M
+query_cache_size = 16M
+skip-external-locking
+socket = /var/run/mysqld/mysqld.sock
+ssl = false
+ssl-ca = /etc/mysql/cacert.pem
+ssl-cert = /etc/mysql/server-cert.pem
+ssl-key = /etc/mysql/server-key.pem
+thread_cache_size = 8
+thread_stack = 256K
+tmpdir = /tmp
+user = mysql
+binlog_format=ROW
+innodb_autoinc_lock_mode=2
+innodb_locks_unsafe_for_binlog=1
+
+####### galera configuration ##########
+
+wsrep_provider=/usr/lib/libgalera_smm.so
+wsrep_cluster_name='galera_cluster'
+wsrep_cluster_address='gcomm://<%= scope.function_hiera(['percona1_ip_address']) %>,<%= scope.function_hiera(['percona2_ip_address']) %>,<%= scope.function_hiera(['percona3_ip_address']) %>' 
+wsrep_sst_auth=root:<%= scope.function_hiera(['mysql_root_password']) %>
+wsrep_certify_nonPK=1
+wsrep_convert_LOCK_to_trx=0
+wsrep_auto_increment_control=1
+wsrep_drupal_282555_workaround=0
+wsrep_causal_reads=0
+wsrep_sst_method=xtrabackup
+
+wsrep_node_address=<%= @ipaddress_eth0 %>
+wsrep_node_incoming_address=<%= @ipaddress_eth0 %>
+
+
+####### galera configuration ##########
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+nice = 0
+socket = /var/run/mysqld/mysqld.sock
+
+[mysqldump]
+max_allowed_packet = 16M
+quick
+quote-names
+
+
+
+!includedir /etc/mysql/conf.d

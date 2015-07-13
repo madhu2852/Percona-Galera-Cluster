@@ -1,0 +1,17 @@
+### Author Details ###
+
+Madhukar Neelaiahgari
+
+Email : neelaiahgari.madhukar@gmail.com
+
+####	HOW TO USE THIS MODULE	####
+
+Step 1 : Install Puppetlabs Mysql Module, Puppet labs APT and Puppet Stdlib modules. 
+
+Step 2 : Configure Hiera as we are passing IP addresses using Hiera 
+
+Step 3 : Copy and paste the site.pp,hiera.yaml and common.yaml  files found in example directory of this  module 
+		 (assign values as per your requirement)
+
+
+#### Example Files can be found in examples directory located in Percona Module ###
