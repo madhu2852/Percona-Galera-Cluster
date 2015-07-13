@@ -1,0 +1,31 @@
+Configure Hiera to make this module to work perfectly
+
+Provide details in common.yaml file
+
+include percona class in site.pp
+
+We need to have puppetlabs-mysql, puppetlabs-Stdlib puppetlabs-APT modules to make this cluster 
+
+Example Hiera.yaml under /etc/puppet/hiera.yaml is as below
+
+SAMPLE HIERA CONFIG
+##################
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: /etc/puppet/hieradata
+:hierarchy:
+  - common
+##################
+
+Example Common.yaml file under /etc/puppet/hieradata
+
+##########  
+### Mention Percona Cluster Ip Addresses Below ###
+percona1_ip_address		: <IP ADDRESSES>
+percona2_ip_address		: <IP ADDRESSES>
+percona3_ip_address		: <IP ADDRESSES>
+boot_strappingnode_hostname	:  <FQDN of the Server which you want to make it as a Galera-Master>
+mysql_root_password		: <STRONG PASSWD>
+##########
